@@ -5,6 +5,7 @@
  */
 package com.mycompany.lez4final;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jdk.jshell.execution.Util;
 
@@ -22,7 +23,7 @@ public class GestioneEsame {
     static int maxvoto;
     static String msg_ok;
     static String msg_ko;
-    
+
     /**
      * @param args the command line arguments
      */
@@ -47,13 +48,13 @@ public class GestioneEsame {
         listaCognomi = new String[quanti];
         listaNomi = new String[quanti];
         listaVoti = new int[quanti];
-        maxvoto=Utils.askInt("valore massimo per esame", 0,100);
-        soglia=Utils.askInt("valore minimo per promozione", 0,maxvoto);
-        msg_ko=JOptionPane.showInputDialog(null,"messaggio sotto soglia (es.bocciato)","bocciato");
-        msg_ko=msg_ko.toUpperCase();
-        msg_ok=JOptionPane.showInputDialog(null,"messaggio sopra soglia (es. promosso)", "promosso");
-        msg_ok=msg_ok.toUpperCase();
-        
+        maxvoto = Utils.askInt("valore massimo per esame", 0, 100);
+        soglia = Utils.askInt("valore minimo per promozione", 0, maxvoto);
+        msg_ko = JOptionPane.showInputDialog(null, "messaggio sotto soglia (es.bocciato)", "bocciato");
+        msg_ko = msg_ko.toUpperCase();
+        msg_ok = JOptionPane.showInputDialog(null, "messaggio sopra soglia (es. promosso)", "promosso");
+        msg_ok = msg_ok.toUpperCase();
+
     }
 
     private static void sessioneEsame() {
@@ -61,10 +62,10 @@ public class GestioneEsame {
 
         for (int i = 0; i < listaCognomi.length; i++) {
             listaCognomi[i] = JOptionPane.showInputDialog("dimmi il cognome " + (1 + i) + " di " + listaNomi.length);
-            listaCognomi[i]=Utils.setFirstCapitalize(listaCognomi[i]);
+            listaCognomi[i] = Utils.setFirstCapitalize(listaCognomi[i]);
             //listaNomi[i] = JOptionPane.showInputDialog("dimmi il nome");
             //listaNomi[i]=Utils.setFirstCapitalize(listaNomi[i]);
-            listaNomi[i]=Utils.setFirstCapitalize(JOptionPane.showInputDialog("dimmi il nome"));
+            listaNomi[i] = Utils.setFirstCapitalize(JOptionPane.showInputDialog("dimmi il nome"));
         }
 
     }
@@ -83,7 +84,7 @@ public class GestioneEsame {
     }
 
     private static void visTabellone() {
-        String ris = "VOTAZIONI\n------------\n" 
+        String ris = "VOTAZIONI\n------------\n"
                 + nomeEsame.toUpperCase()
                 + "\n------------\n";
         for (int i = 0; i < listaCognomi.length; i++) {
@@ -91,17 +92,62 @@ public class GestioneEsame {
             // rossi mario - voto = 90 non ammesso
             ris = ris + listaCognomi[i] + " " + listaNomi[i];
             ris += " - voto = " + listaVoti[i];
-            if (listaVoti[i]>=soglia) //caso ok
+            if (listaVoti[i] >= soglia) //caso ok
             {
-               ris+= " " + msg_ok + "\n"; 
-            }
-            else //caso ko
+                ris += " " + msg_ok + "\n";
+            } else //caso ko
             {
-               ris+= " " + msg_ko + "\n"; 
-                
+                ris += " " + msg_ko + "\n";
+
             }
-            
+
+        }
+        ris += thebest();
+        String arRisSorted[];
+        arRisSorted = creaArrayRisultati();
+        Utils.sort(arRisSorted);
+        ris += "\n";
+        for (int i = 0; i < listaCognomi.length; i++) {
+            ris += arRisSorted[i] + "\n";
         }
         JOptionPane.showMessageDialog(null, ris);
     }
+
+    static String[] creaArrayRisultati() {
+        String[] ris = new String[listaCognomi.length];
+        for (int i = 0; i < listaCognomi.length; i++) {
+            ris[i] = listaCognomi[i] + " " + listaNomi[i] + " voto " + listaVoti[i];
+        }
+        return ris;
+    }
+
+    static String thebest() {
+        int valbest = 0;
+        int indexbest = 0;
+        for (int i = 0; i < listaCognomi.length; i++) {
+
+            if (listaVoti[i] > valbest) //caso ok
+            {
+                valbest = listaVoti[i];
+                indexbest = i;
+            }
+        }
+        return "the best is " + listaCognomi[indexbest] + " "
+                + listaNomi[indexbest] + " con il voto " + listaVoti[indexbest];
+    }
+
+    static int votothebest() {
+        int valbest = 0;
+        for (int i = 0; i < listaCognomi.length; i++) {
+
+            if (listaVoti[i] > valbest) //caso ok
+            {
+                valbest = listaVoti[i];
+            }
+
+        }
+        return valbest;
+
+    }
+
 }
