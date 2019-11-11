@@ -5,6 +5,7 @@
  */
 package com.mycompany.lez4final;
 
+import static com.mycompany.lez4final.GestioneEsame.listaCognomi;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
 
+    
+    
     static String setFirstCapitalize(String testo) {
         String ris = "";
         String f = testo.substring(0, 1).toUpperCase();
@@ -110,4 +113,24 @@ public class Utils {
         ris = prezzo - prezzo * sconto / 100;
         return ris;
     }
+    
+    static void sort(String[] listaTesti) {
+        for (int i = 0; i < listaTesti.length - 1; i++) {
+            
+            for (int j = i + 1; j < listaTesti.length; j++) {
+                
+                if (listaTesti[i].compareTo(listaTesti[j]) >= 0) {
+                    //li inverto
+                    String temp = listaTesti[i];
+                    listaTesti[i] = listaTesti[j];
+                    listaTesti[j] = temp;
+                }
+            }
+
+        }
+
+        
+    }
+    
+    
 }
