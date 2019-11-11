@@ -83,9 +83,9 @@ public class GestioneEsame {
     }
 
     private static void visTabellone() {
-        String ris = "VOTAZIONI\n---------\n" 
+        String ris = "VOTAZIONI\n------------\n" 
                 + nomeEsame.toUpperCase()
-                + "\n-------\n";
+                + "\n------------\n";
         for (int i = 0; i < listaCognomi.length; i++) {
             // guerrini luca - voto = 73 ammesso
             // rossi mario - voto = 90 non ammesso
